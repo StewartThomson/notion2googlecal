@@ -1,3 +1,5 @@
+Changed so that it only does Google -> notion sync, and only grabs events occuring AFTER the time of syncing
+
 # Notion to Google Calendar Integration
 
 This script utilizes the unofficial [Notion API](https://github.com/jamalex/notion-py) and the [Google Calendar API](https://developers.google.com/calendar) to sync a calendar directly between Notion and Google Calendar. Set this up as a cron job to have it sync changes between calendars automatically!
@@ -30,7 +32,7 @@ Your calendars should now be **sucessfully synced!** You can continue to run you
 
 1. **Install Google Cloud Command Line Tools (skip if you already have)**
 
-    You will need to initialize GCloud's SDK in order to deploy the script. [Download the SDK here and follow the instructions to initialize](https://cloud.google.com/sdk/docs/quickstarts). 
+    You will need to initialize GCloud's SDK in order to deploy the script. [Download the SDK here and follow the instructions to initialize](https://cloud.google.com/sdk/docs/quickstarts).
 
 2. **Create a Cloud Function:**<br>
 Navigate to [Google Cloud Platform](https://console.cloud.google.com/getting-started?ref=https:%2F%2Fwww.google.com%2F). On the dashboard for your new project, open `Go to APIs Overview`, and click `ENABLE APIS AND SERVICES`. Search for and enable the `Google Build API` and `Google Calendar API`. Next, navigate back to the API & Services home page, and into the `Credentials` tab. In the `Service Accounts` section, there should be an App Engine default service account already created. Copy the email address, go to `Settings and sharing` for the Google Calendar you want synced, and share the calendar with the service account, providing it permission to `Make changes`. <br><br>
@@ -51,13 +53,13 @@ f) Click `CREATE`.<br>
 
 ## Warnings
 
-1. **Timezones:** From testing, using `os.environ["TZ"]` does not work on windows computers. If you plan to use this calendar with people in other timezones, they must manually configure the timezone of the event that they add in the Notion calendar to **match the timezone** of the person who created the calendar. 
+1. **Timezones:** From testing, using `os.environ["TZ"]` does not work on windows computers. If you plan to use this calendar with people in other timezones, they must manually configure the timezone of the event that they add in the Notion calendar to **match the timezone** of the person who created the calendar.
 2. **Recurring Events:**
 Syncing a calendar with recurring events will remove the recurrence rule property from events in google calendar. Since notion does not allow for specifying IDs, we are unable to maintain sync while also upholding the requirements for google calendar IDs and RecurringEventIDs. Syncing will still display all recurring and non-recurring events on your calendar, but will not maintain the recurrence rule property of recurring google calendar events.
 <br><br>
 ## We Need Help!
 
-This script is far from perfect, and we're trying to make the script as efficient as possible to minimize the rate at which Google Calendar's API is called as well as the number of times it needs to be called. 
+This script is far from perfect, and we're trying to make the script as efficient as possible to minimize the rate at which Google Calendar's API is called as well as the number of times it needs to be called.
 
 Setting up the script as a cron job will cause a violation in the rate limit beyond a calendar of ~120 events, which is not a lot.
 <!--stackedit_data:
